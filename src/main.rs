@@ -1,5 +1,6 @@
 #[allow(non_snake_case)]
 
+use oxiDice::*;
 use clap::{Parser, Arg, Command, ArgAction, command};
 use rand::{thread_rng, Rng};
 use rand::distributions::Alphanumeric;
@@ -28,22 +29,47 @@ use rand::distributions::Alphanumeric;
 fn main() {
     let matches = command!() // requires `cargo` feature
         .arg(
-            Arg::new("verbose")
-                .short('v')
-                .long("verbose")
-                .action(ArgAction::SetTrue),
-                .help("Disable usage of lowercase letters.")
+            Arg::new("code")
+                .short('c')
+                .long("code")
+                .action(ArgAction::SetTrue)
+                .help("Generate a passCODE. Default --> False")
         )
         .arg(
-            Arg::new("no")
-                .short('n')
-                .long("no")
-                .action(ArgAction::SetTrue),
+            Arg::new("length")
+                .short('l')
+                .long("length")
+                .requires("code")
+                .action(ArgAction::Set)
+                .default_value("10")
+                .value_parser(clap::value_parser!(u32))
+                .help("Specify the length of the passcode."),
         )
+        .arg(
+            Arg::new("numbers")
+                .short('n')
+                .long("numbers")
+                .requires("code")
+                .action(ArgAction::Set)
+                .default_value("true")
+                .value_parser(clap::value_parser!(bool))
+                .help("Specify whether to use numbers [0-9] or not."),
+        )
+        .arg(
+            Arg::new("similar")
+                .short('s')
+                .long("similar")
+                .requires("code")
+                .action(ArgAction::Set)
+                .default_value("true")
+                .value_parser(clap::value_parser!(bool))
+                .help("Specify whether to use similar values {!lL'`0oO} or not."),
+        )
+        
         .get_matches();
 
-    println!("verbose: {:?}", matches.get_flag("verbose"));
-    println!("no: {:?}", matches.get_flag("no"));
+        code();
+
     // let args = Args::parse();
     
     // if args.phrase == 0 {
