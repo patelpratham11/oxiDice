@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 autoclap = "0.3.15"
 clap = { version = "4.4.7", features = ["cargo", "string", "derive"] }
+ilog = "1.0.1"
+rand = "0.8.5"
