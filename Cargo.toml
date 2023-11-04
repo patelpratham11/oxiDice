@@ -3,6 +3,9 @@ name = "oxiDice"
 version = "0.1.0"
 edition = "2021"
 authors = ["Pratham Patel"]
+description = "Simple CLI to generate customizable passwords as either alphanumeric codes or diceware-based phrases."
+readme = "..README.md"
+license = "MIT"
 
 [profile.dev]
 opt-level = 0
