@@ -8,7 +8,8 @@ pub struct PassCode {}
 impl PassCode {
     pub fn generate(config: &Configurator) {
         let pool = Self::code_pool(config);
-        for _ in 0..10 {
+        let mut end = config.matches.get_one::<usize>("count").unwrap();
+        for _ in 0..*end {
             let pass = Self::generate_code(config, &pool);
             println!("{} --> ENTROPY: {}", pass, entropy::entropy(&pass));
         }

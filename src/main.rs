@@ -3,6 +3,7 @@
 use clap::{Arg, ArgAction, command, Command};
 use oxiDice::config::Configurator;
 use oxiDice::pass_code::PassCode;
+use oxiDice::pass_phrase::PassPhrase;
 
 fn main() {
     let matches = Command::new("oxiDice")
@@ -33,9 +34,9 @@ fn main() {
                 .short('n')
                 .long("numbers")
                 .requires("code")
-                .action(ArgAction::Set)
+                .action(ArgAction::SetFalse)
                 .default_value("true")
-                .value_parser(clap::value_parser!(bool))
+                // .value_parser(clap::value_parser!(bool))
                 .help("Specify whether to use numbers [0-9] or not."),
         )
         .arg(
@@ -43,9 +44,9 @@ fn main() {
                 .short('s')
                 .long("special")
                 .requires("code")
-                .action(ArgAction::Set)
+                .action(ArgAction::SetFalse)
                 .default_value("true")
-                .value_parser(clap::value_parser!(bool))
+                // .value_parser(clap::value_parser!(bool))
                 .help("Specify whether to use special characters or not."),
         )
         .arg(
@@ -54,8 +55,25 @@ fn main() {
                 .long("words")
                 .action(ArgAction::Set)
                 .default_value("5")
-                .value_parser(clap::value_parser!(u8))
+                .value_parser(clap::value_parser!(usize))
                 .help("Number of words to generate for diceware"),
+        )
+        .arg(
+            Arg::new("delimiter")
+                .short('d')
+                .long("delimiter")
+                .action(ArgAction::Set)
+                .default_value("-")
+                .help("Delimiter to use between words."),
+        )
+        .arg(
+            Arg::new("count")
+                .short('#')
+                .long("count")
+                .action(ArgAction::Set)
+                .default_value("10")
+                .value_parser(clap::value_parser!(usize))
+                .help("Number of passes to generate."),
         )
         .get_matches();
 
@@ -63,7 +81,7 @@ fn main() {
         if config.matches.get_flag("code"){
             PassCode::generate (&config );
         } else {
-            println!("dice");
+            PassPhrase::generate(&config);
         }
 
     // let args = Args::parse();

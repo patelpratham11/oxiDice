@@ -2,3 +2,4 @@
 pub mod config;
 pub mod pass_code;
 pub mod entropy;
+pub mod pass_phrase;
