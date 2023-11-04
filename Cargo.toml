@@ -1,6 +1,6 @@
 [package]
 name = "oxiDice"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["Pratham Patel @patelpratham11"]
 description = "Simple CLI to generate customizable passwords as either alphanumeric codes or diceware-based phrases."
