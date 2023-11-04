@@ -35,7 +35,7 @@ fn main() {
                 .requires("type")
                 .action(ArgAction::SetFalse)
                 .default_value("true")
-                .help("Specify whether to use numbers [0-9] or not."),
+                .help("Specify whether to use numbers [0-9] or not. [default: true]"),
         )
         .arg(
             Arg::new("specials")
@@ -44,7 +44,7 @@ fn main() {
                 .requires("type")
                 .action(ArgAction::SetFalse)
                 .default_value("true")
-                .help("Specify whether to use special characters or not."),
+                .help("Specify whether to use special characters or not. [default: true]"),
         )
         .arg(
             Arg::new("words")
