@@ -1,40 +1,22 @@
 #[allow(non_snake_case)]
 
-use oxiDice::*;
-use clap::{Parser, Arg, Command, ArgAction, command};
-use rand::{thread_rng, Rng};
-use rand::distributions::Alphanumeric;
+use clap::{Arg, ArgAction, command, Command};
 use oxiDice::config::Configurator;
-
-// /// Simple passphrase generator based on diceware
-// #[derive(Parser, Debug)]
-// #[command(author, version, about, long_about = None)]
-// struct Args {
-//     /// Number of words to generate
-//     #[arg(short, long, default_value_t = 5)]
-//     length: u8,
-
-//     /// Delimiter character
-//     #[arg(short, long, default_value = "-", required = false )]
-//     delimiter: String,
-
-//     /// Number of passphrases to generate
-//     #[arg(short, long, default_value_t = 10)]
-//     count: u8,
-
-//     /// Generate similar characters as prefix
-//     #[arg(short, long)]
-//     similar: ,
-// }
+use oxiDice::pass_code::PassCode;
 
 fn main() {
-    let matches = command!() // requires `cargo` feature
+    let matches = Command::new("oxiDice")
+        .author("Pratham Patel")
+        .about("Simple CLI to generate passwords.")
+        .long_about("Rust-based CLI to generate custom passphrases based on diceware OR passcodes based on set criteria. Users can set the length along with flags for numbers, special characters, or look alikes.")
         .arg(
             Arg::new("code")
                 .short('c')
                 .long("code")
                 .action(ArgAction::SetTrue)
-                .help("Generate a passCODE. Default --> False")
+                .default_value("false")
+                .value_parser(clap::value_parser!(bool))
+                .help("Generate a passCODE.")
         )
         .arg(
             Arg::new("length")
@@ -43,7 +25,7 @@ fn main() {
                 .requires("code")
                 .action(ArgAction::Set)
                 .default_value("10")
-                .value_parser(clap::value_parser!(u32))
+                .value_parser(clap::value_parser!(usize))
                 .help("Specify the length of the passcode."),
         )
         .arg(
@@ -57,18 +39,8 @@ fn main() {
                 .help("Specify whether to use numbers [0-9] or not."),
         )
         .arg(
-            Arg::new("similar")
-                .short('s')
-                .long("similar")
-                .requires("code")
-                .action(ArgAction::Set)
-                .default_value("true")
-                .value_parser(clap::value_parser!(bool))
-                .help("Specify whether to use similar values {!lL'`0oO} or not."),
-        )
-        .arg(
             Arg::new("specials")
-                .short('b')
+                .short('s')
                 .long("special")
                 .requires("code")
                 .action(ArgAction::Set)
@@ -87,9 +59,9 @@ fn main() {
         )
         .get_matches();
 
-        let config = oxiDice::config::Configurator { matches };
+        let config = Configurator { matches };
         if config.matches.get_flag("code"){
-            oxiDice::pass_code::pass_code::generate (&config );
+            PassCode::generate (&config );
         } else {
             println!("dice");
         }
@@ -109,14 +81,4 @@ fn main() {
     //     println!("Implement phrases");
     // }
     
-}
-
-fn entropy(pass: &str) -> f32 {
-    (pass.chars().count() as f32)*(calculate_unique(pass).log2())
-}
-
-fn calculate_unique(pass: &str) -> f32{
-    let mut v: Vec<char> = pass.chars().collect();
-    v.dedup();
-    v.len() as f32
 }
