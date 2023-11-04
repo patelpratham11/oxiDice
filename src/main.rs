@@ -4,6 +4,7 @@ use oxiDice::*;
 use clap::{Parser, Arg, Command, ArgAction, command};
 use rand::{thread_rng, Rng};
 use rand::distributions::Alphanumeric;
+use oxiDice::config::Configurator;
 
 // /// Simple passphrase generator based on diceware
 // #[derive(Parser, Debug)]
@@ -65,10 +66,33 @@ fn main() {
                 .value_parser(clap::value_parser!(bool))
                 .help("Specify whether to use similar values {!lL'`0oO} or not."),
         )
-        
+        .arg(
+            Arg::new("specials")
+                .short('b')
+                .long("special")
+                .requires("code")
+                .action(ArgAction::Set)
+                .default_value("true")
+                .value_parser(clap::value_parser!(bool))
+                .help("Specify whether to use special characters or not."),
+        )
+        .arg(
+            Arg::new("words")
+                .short('w')
+                .long("words")
+                .action(ArgAction::Set)
+                .default_value("5")
+                .value_parser(clap::value_parser!(u8))
+                .help("Number of words to generate for diceware"),
+        )
         .get_matches();
 
-        code();
+        let config = oxiDice::config::Configurator { matches };
+        if config.matches.get_flag("code"){
+            oxiDice::pass_code::pass_code::generate (&config );
+        } else {
+            println!("dice");
+        }
 
     // let args = Args::parse();
     

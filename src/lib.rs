@@ -1,7 +1,2 @@
-mod pass_code;
-
-pub use crate::pass_code::generate;
-
-pub fn code() {
-    generate::generate();
-}
+pub mod config;
+pub mod pass_code;
