@@ -1,4 +1,4 @@
-![oxiDice Logo](/imgs/oxiDice.png)
+![oxiDice Logo](/imgs/full.png)
 
 # oxiDice
 
