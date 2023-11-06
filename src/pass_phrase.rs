@@ -13,6 +13,7 @@ impl PassPhrase {
             let pass = Self::generate_code(config, &pool); // get me the password
             println!("{} --> ENTROPY: {}\n", pass, entropy::entropy(&pass)); // print and entropy
         }
+        println!("Please clear the terminal after!");
     }
 
     fn code_pool() -> std::collections::HashMap<String, String> { // read into hashmap

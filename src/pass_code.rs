@@ -13,6 +13,7 @@ impl PassCode {
             let pass = Self::generate_code(config, &pool);
             println!("{} --> ENTROPY: {}\n", pass, entropy::entropy(&pass));
         }
+        println!("Please clear the terminal after!");
     }
 
     fn code_pool(config: &Configurator) -> Vec<char> {
