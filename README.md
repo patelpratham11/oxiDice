@@ -1,3 +1,4 @@
+[![crates.io](https://img.shields.io/crates/d/oxiDice.svg)](https://crates.io/crates/oxiDice)
 ![oxiDice Logo](/imgs/full.png)
 
 # oxiDice
